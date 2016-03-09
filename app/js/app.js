@@ -8,6 +8,44 @@ var miniQuery = (function() {
     }
   }
   var SweetSelector = (function(){
+    var SweetSelector = function(el) {
+      SweetSelectorObj = new SweetSelector.prototype.init(el);
+      return SweetSelectorObj;
+    }
+
+    SweetSelector.prototype = {
+      init: function(el) {
+        this.selector = SweetSelector.prototype.select(el);
+        return this;
+      },
+
+      html: function() {
+        return this.selector.innerHTML;
+      },
+
+      select: function(selector){
+        if (selector.substring(0,1) == '#'){
+          return queryId(selector.substring(1));
+        }
+        else if (selector.substring(0,1) == '.'){
+          return queryClass(selector.substring(1));
+        }
+        else {
+          debugger;
+          return queryTag(selector);
+        }
+      },
+
+      on: function(selector, eventname, functionname, delagator){
+        SweetSelector.prototype.select(selector).addEventListener(eventname, functionname);
+        console.log(this);
+    },
+
+      selector: ""
+    }
+
+    SweetSelector.prototype.init.prototype = SweetSelector.prototype;
+
     var queryId = function(iwantanid){
       return document.getElementById(iwantanid);
     }
@@ -30,9 +68,8 @@ var miniQuery = (function() {
       else
         return queryTag(selector);
     }
-    return {
-      select: select
-    }
+    window.SweetSelector = SweetSelector;
+    return SweetSelector;
   }) ()
 
   var DOM = (function() {
@@ -67,9 +104,13 @@ var miniQuery = (function() {
   }) ()
 
   var EventDispatcher = (function() {
-    var on = function(selector, eventname, functionname){
+    var on = function(selector, eventname, functionname, delagator){
       // debugger
-      SweetSelector.select(selector).addEventListener(eventname, functionname);
+      if (typeof delegator === undefined) {
+        SweetSelector.select(selector).addEventListener(eventname, functionname);
+      } else {
+
+      }
     }
 
     var trigger = function(selector, eventname){
@@ -158,7 +199,8 @@ var miniQuery = (function() {
 })()
 
 miniQuery.ready(function() {
-  var templateScript = miniQuery.html("#list-template");
+  // var templateScript = miniQuery.html("#list-template");
+  templateScript = SweetSelector("#list-template").html();
   // console.log("Template Script: " + templateScript)
   var template = Handlebars.compile(templateScript);
   // console.log("Template: " + template)
@@ -172,8 +214,9 @@ miniQuery.ready(function() {
     // console.log("People: ");
     // console.log(people);
     var templatehtml = template({people: JSON.parse(people)});
-    miniQuery.select("#list-placeholder").innerHTML = templatehtml;
-
+    // console.log("Template HTML: " + templatehtml);
+    // miniQuery.select("#list-placeholder").innerHTML = templatehtml;
+    SweetSelector("#list-placeholder").selector.innerHTML = templatehtml;
 
 
   });
@@ -188,17 +231,17 @@ miniQuery.ready(function() {
   //   console.log(this);
   //   console.log(miniQuery.select(this.id));
   // })
-  // miniQuery.on('#list-placeholder', 'click', function(e){
-  //   e.preventDefault();
-  //   console.log("fucking javascript")
-  //   console.log(this)
-  // })
+  SweetSelector('#list-placeholder').on('a', 'click', function(e){
+    e.preventDefault();
+    console.log("fucking javascript")
+    console.log(this)
+  })
 
-  var blah = miniQuery.select('#list-placeholder')
-  var bla = miniQuery.on("a", "click", function(e){
-      e.preventDefault();
-  //    debugger
-      console.log(this)
-   })
-  blah.bla
+//   var blah = miniQuery.select('#list-placeholder')
+//   var bla = miniQuery.on("a", "click", function(e){
+//     e.preventDefault();
+//   //    debugger
+//   console.log(this)
+// })
+//   blah.bla
 })
