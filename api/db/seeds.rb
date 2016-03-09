@@ -7,6 +7,7 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 Person.destroy_all
+Badge.destroy_all
 
 Person.create(name: "Lindsey Ullman")
 Person.create(name: "Monique Williamson")

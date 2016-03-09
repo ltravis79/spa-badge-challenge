@@ -15,15 +15,18 @@
     <!--Data will be inserted in its according place, replacing the brackets.-->
     <script id="list-template" type="text/x-handlebars-template">
       {{#each people}}
-        <li><a href="/people/{{id}}">{{name}}</a><div id="badge-placeholder{{id}}">
+        <li><a id="{{id}}" href="/people/{{id}}">{{name}}</a>
+        <div id="badge-placeholder{{id}}">
       </div></li>
       {{/each}}
     </script>
 
     <script id="badge-template" type="text/x-handlebars-template">
-      {{#each badge}}
+      <ul>
+      {{#each badges}}
         <li>{{title}}</li>
       {{/each}}
+      </ul>
     </script>
 
 
