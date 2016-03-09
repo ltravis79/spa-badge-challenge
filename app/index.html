@@ -2,6 +2,7 @@
 <html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <link rel="stylesheet" type="text/css" href="css/main.css">
   <script src="js/app.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"></script>
   <title>SPABadge</title>
 </head>
 <body>
@@ -9,17 +10,28 @@
     <div class="logo">
       <h1> SPA Badge </h1>
     </div>
-    <h1> SF Teachers </h1>
-      <ul>
-        <li><a href="#">Anne</a></li>
-        <li><a href="#">Derek</a></li>
-        <li><a href="#">Hunter</li>
-        <li><a href="#">Jen</a></li>
-        <li><a href="#">Julian</a></li>
-        <li><a href="#">Sarah</a></li>
-        <li><a href="#">Shambhavi</a></li>
-        <li><a href="#">Walker</a></li>
-        <li><a href="sample-page.html">Sample Page</a></li>
+    <h1> SF People </h1>
+    <!--This is our template. -->
+    <!--Data will be inserted in its according place, replacing the brackets.-->
+    <script id="list-template" type="text/x-handlebars-template">
+      {{#each people}}
+        <li><a href="/people/{{id}}">{{name}}</a><div id="badge-placeholder{{id}}">
+      </div></li>
+      {{/each}}
+    </script>
+
+    <script id="badge-template" type="text/x-handlebars-template">
+      {{#each badge}}
+        <li>{{title}}</li>
+      {{/each}}
+    </script>
+
+
+      <ul id="list">
+      <!--Your new content will be displayed in here-->
+        <div id="list-placeholder">
+
+        </div>
       </ul>
   </div>
 </body>
